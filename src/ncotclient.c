@@ -1,19 +1,19 @@
 #include <gtk/gtk.h>
 
-#include "cpwclient.h"
-#include "cpwclientwin.h"
-#include "cpwclientprefs.h"
-#include "cpwclientconnect.h"
+#include "ncotclient.h"
+#include "ncotclientwin.h"
+#include "ncotclientprefs.h"
+#include "ncotclientconnect.h"
 
-struct _CpwClient
+struct _NcotClient
 {
   GtkApplication parent;
 };
 
-G_DEFINE_TYPE(CpwClient, cpw_client, GTK_TYPE_APPLICATION);
+G_DEFINE_TYPE(NcotClient, ncot_client, GTK_TYPE_APPLICATION);
 
 static void
-cpw_client_init (CpwClient *app)
+ncot_client_init (NcotClient *app)
 {
 }
 
@@ -23,11 +23,11 @@ connect_activated (GSimpleAction *action,
 		   gpointer       app)
 
 {
-  CpwClientConnect *connect;
+  NcotClientConnect *connect;
   GtkWindow *win;
   
   win = gtk_application_get_active_window (GTK_APPLICATION (app));
-  connect = cpw_client_connect_new (CPW_CLIENT_WINDOW (win));
+  connect = ncot_client_connect_new (NCOT_CLIENT_WINDOW (win));
   gtk_window_present (GTK_WINDOW (connect));
 }
 
@@ -36,11 +36,11 @@ preferences_activated (GSimpleAction *action,
                        GVariant      *parameter,
                        gpointer       app)
 {
-  CpwClientPrefs *prefs;
+  NcotClientPrefs *prefs;
   GtkWindow *win;
 
   win = gtk_application_get_active_window (GTK_APPLICATION (app));
-  prefs = cpw_client_prefs_new (CPW_CLIENT_WINDOW (win));
+  prefs = ncot_client_prefs_new (NCOT_CLIENT_WINDOW (win));
   gtk_window_present (GTK_WINDOW (prefs));
 }
 
@@ -60,13 +60,13 @@ static GActionEntry app_entries[] =
 };
 
 static void
-cpw_client_startup (GApplication *app)
+ncot_client_startup (GApplication *app)
 {
   GtkBuilder *builder;
   GMenuModel *app_menu;
   const gchar *quit_accels[2] = { "<Ctrl>Q", NULL };
 
-  G_APPLICATION_CLASS (cpw_client_parent_class)->startup (app);
+  G_APPLICATION_CLASS (ncot_client_parent_class)->startup (app);
 
   g_action_map_add_action_entries (G_ACTION_MAP (app),
                                    app_entries, G_N_ELEMENTS (app_entries),
@@ -75,56 +75,56 @@ cpw_client_startup (GApplication *app)
                                          "app.quit",
                                          quit_accels);
 
-  builder = gtk_builder_new_from_resource ("/org/gtk/cpwclient/app-menu.ui");
+  builder = gtk_builder_new_from_resource ("/org/gtk/ncotclient/app-menu.ui");
   app_menu = G_MENU_MODEL (gtk_builder_get_object (builder, "appmenu"));
   gtk_application_set_app_menu (GTK_APPLICATION (app), app_menu);
   g_object_unref (builder);
 }
 
 static void
-cpw_client_activate (GApplication *app)
+ncot_client_activate (GApplication *app)
 {
-  CpwClientWindow *win;
+  NcotClientWindow *win;
 
-  win = cpw_client_window_new (CPW_CLIENT (app));
+  win = ncot_client_window_new (NCOT_CLIENT (app));
   gtk_window_present (GTK_WINDOW (win));
 }
 
 static void
-cpw_client_open (GApplication  *app,
+ncot_client_open (GApplication  *app,
                   GFile        **files,
                   gint           n_files,
                   const gchar   *hint)
 {
   GList *windows;
-  CpwClientWindow *win;
+  NcotClientWindow *win;
   int i;
 
   windows = gtk_application_get_windows (GTK_APPLICATION (app));
   if (windows)
-    win = CPW_CLIENT_WINDOW (windows->data);
+    win = NCOT_CLIENT_WINDOW (windows->data);
   else
-    win = cpw_client_window_new (CPW_CLIENT (app));
+    win = ncot_client_window_new (NCOT_CLIENT (app));
 
   for (i = 0; i < n_files; i++)
-    cpw_client_window_open (win, files[i]);
+    ncot_client_window_open (win, files[i]);
 
   gtk_window_present (GTK_WINDOW (win));
 }
 
 static void
-cpw_client_class_init (CpwClientClass *class)
+ncot_client_class_init (NcotClientClass *class)
 {
-  G_APPLICATION_CLASS (class)->startup = cpw_client_startup;
-  G_APPLICATION_CLASS (class)->activate = cpw_client_activate;
-  G_APPLICATION_CLASS (class)->open = cpw_client_open;
+  G_APPLICATION_CLASS (class)->startup = ncot_client_startup;
+  G_APPLICATION_CLASS (class)->activate = ncot_client_activate;
+  G_APPLICATION_CLASS (class)->open = ncot_client_open;
 }
 
-CpwClient *
-cpw_client_new (void)
+NcotClient *
+ncot_client_new (void)
 {
-  return g_object_new (CPW_CLIENT_TYPE,
-                       "application-id", "org.gtk.cpwclient",
+  return g_object_new (NCOT_CLIENT_TYPE,
+                       "application-id", "org.gtk.ncotclient",
                        "flags", G_APPLICATION_HANDLES_OPEN,
                        NULL);
 }

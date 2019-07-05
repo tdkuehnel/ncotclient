@@ -1,33 +1,33 @@
 #include <gtk/gtk.h>
 
-#include "cpwclient.h"
-#include "cpwclientwin.h"
-#include "cpwclientconnect.h"
+#include "ncotclient.h"
+#include "ncotclientwin.h"
+#include "ncotclientconnect.h"
 
-struct _CpwClientConnect
+struct _NcotClientConnect
 {
   GtkDialog parent;
 };
 
-typedef struct _CpwClientConnectPrivate CpwClientConnectPrivate;
+typedef struct _NcotClientConnectPrivate NcotClientConnectPrivate;
 
-struct _CpwClientConnectPrivate
+struct _NcotClientConnectPrivate
 {
   GSettings *settings;
   GtkWidget *connectstring;
   GtkWidget *connectport;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE(CpwClientConnect, cpw_client_connect, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE(NcotClientConnect, ncot_client_connect, GTK_TYPE_DIALOG)
 
 static void
-cpw_client_connect_init (CpwClientConnect *connect)
+ncot_client_connect_init (NcotClientConnect *connect)
 {
-  CpwClientConnectPrivate *priv;
+  NcotClientConnectPrivate *priv;
 
-  priv = cpw_client_connect_get_instance_private (connect);
+  priv = ncot_client_connect_get_instance_private (connect);
   gtk_widget_init_template (GTK_WIDGET (connect));
-  priv->settings = g_settings_new ("org.gtk.cpwclient");
+  priv->settings = g_settings_new ("org.gtk.ncotclient");
 
   g_settings_bind (priv->settings, "connectstring",
                    priv->connectstring, "text",
@@ -38,28 +38,28 @@ cpw_client_connect_init (CpwClientConnect *connect)
 }
 
 static void
-cpw_client_connect_dispose (GObject *object)
+ncot_client_connect_dispose (GObject *object)
 {
-  CpwClientConnectPrivate *priv;
+  NcotClientConnectPrivate *priv;
 
-  priv = cpw_client_connect_get_instance_private (CPW_CLIENT_CONNECT (object));
+  priv = ncot_client_connect_get_instance_private (NCOT_CLIENT_CONNECT (object));
   g_clear_object (&priv->settings);
 
-  G_OBJECT_CLASS (cpw_client_connect_parent_class)->dispose (object);
+  G_OBJECT_CLASS (ncot_client_connect_parent_class)->dispose (object);
 }
 
 static void
-cpw_client_connect_class_init (CpwClientConnectClass *class)
+ncot_client_connect_class_init (NcotClientConnectClass *class)
 {
-  G_OBJECT_CLASS (class)->dispose = cpw_client_connect_dispose;
+  G_OBJECT_CLASS (class)->dispose = ncot_client_connect_dispose;
 
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gtk/cpwclient/connect.ui");
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), CpwClientConnect, connectstring);
+                                               "/org/gtk/ncotclient/connect.ui");
+  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), NcotClientConnect, connectstring);
 }
 
-CpwClientConnect *
-cpw_client_connect_new (CpwClientWindow *win)
+NcotClientConnect *
+ncot_client_connect_new (NcotClientWindow *win)
 {
-  return g_object_new (CPW_CLIENT_CONNECT_TYPE, "transient-for", win, "use-header-bar", TRUE, NULL);
+  return g_object_new (NCOT_CLIENT_CONNECT_TYPE, "transient-for", win, "use-header-bar", TRUE, NULL);
 }

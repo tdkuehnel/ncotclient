@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/org/gtk/ncotclient/" id="org.gtk.ncotclient">
+    <key name="font" type="s">
+      <default>'Monospace 12'</default>
+      <summary>Font</summary>
+      <description>The font to be used for content.</description>
+    </key>
+    <key name="transition" type="s">
+      <choices>
+        <choice value='none'/>
+        <choice value='crossfade'/>
+        <choice value='slide-left-right'/>
+      </choices>
+      <default>'none'</default>
+      <summary>Transition</summary>
+      <description>The transition to use when switching tabs.</description>
+    </key>
+    <key name="connectstring" type="s">
+      <default>'127.0.0.1'</default>
+      <summary>NCOT Host</summary>
+      <description>The host address running ncot to connect to</description>
+    </key>
+    <key name="connectport" type="i">
+      <range min="0" max="65535"/>
+      <default>32400</default>
+      <summary>NCOT Port</summary>
+      <description>Corresponding port address</description>
+    </key>
+  </schema>
+</schemalist>

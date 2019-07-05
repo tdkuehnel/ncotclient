@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.8 -->
-  <template class="CpwClientWindow" parent="GtkApplicationWindow">
-    <property name="title" translatable="yes">CPWClient Application</property>
+  <template class="NcotClientWindow" parent="GtkApplicationWindow">
+    <property name="title" translatable="yes">NCOTClient Application</property>
     <property name="default-width">600</property>
     <property name="default-height">400</property>
     <child>

@@ -1,15 +1,15 @@
-#ifndef __CPWCLIENTCONNECT_H
-#define __CPWCLIENTCONNECT_H
+#ifndef __NCOTCLIENTCONNECT_H
+#define __NCOTCLIENTCONNECT_H
 
 #include <gtk/gtk.h>
-#include "cpwclientwin.h"
+#include "ncotclientwin.h"
 
 
-#define CPW_CLIENT_CONNECT_TYPE (cpw_client_connect_get_type ())
-G_DECLARE_FINAL_TYPE (CpwClientConnect, cpw_client_connect, CPW, CLIENT_CONNECT, GtkDialog)
+#define NCOT_CLIENT_CONNECT_TYPE (ncot_client_connect_get_type ())
+G_DECLARE_FINAL_TYPE (NcotClientConnect, ncot_client_connect, NCOT, CLIENT_CONNECT, GtkDialog)
 
 
-CpwClientConnect        *cpw_client_connect_new          (CpwClientWindow *win);
+NcotClientConnect        *ncot_client_connect_new          (NcotClientWindow *win);
 
 
-#endif /* __CPWCLIENTCONNECT_H */
+#endif /* __NCOTCLIENTCONNECT_H */

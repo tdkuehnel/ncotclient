@@ -1,31 +1,31 @@
 #include <gtk/gtk.h>
 
-#include "cpwclient.h"
-#include "cpwclientwin.h"
+#include "ncotclient.h"
+#include "ncotclientwin.h"
 
-struct _CpwClientWindow
+struct _NcotClientWindow
 {
   GtkApplicationWindow parent;
 };
 
-typedef struct CpwClientWindowPrivate CpwClientWindowPrivate;
+typedef struct NcotClientWindowPrivate NcotClientWindowPrivate;
 
-struct CpwClientWindowPrivate
+struct NcotClientWindowPrivate
 {
   GSettings *settings;
   GtkWidget *stack;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE(CpwClientWindow, cpw_client_window, GTK_TYPE_APPLICATION_WINDOW);
+G_DEFINE_TYPE_WITH_PRIVATE(NcotClientWindow, ncot_client_window, GTK_TYPE_APPLICATION_WINDOW);
 
 static void
-cpw_client_window_init (CpwClientWindow *win)
+ncot_client_window_init (NcotClientWindow *win)
 {
-  CpwClientWindowPrivate *priv;
+  NcotClientWindowPrivate *priv;
 
-  priv = cpw_client_window_get_instance_private (win);
+  priv = ncot_client_window_get_instance_private (win);
   gtk_widget_init_template (GTK_WIDGET (win));
-  priv->settings = g_settings_new ("org.gtk.cpwclient");
+  priv->settings = g_settings_new ("org.gtk.ncotclient");
 
   g_settings_bind (priv->settings, "transition",
                    priv->stack, "transition-type",
@@ -33,40 +33,40 @@ cpw_client_window_init (CpwClientWindow *win)
 }
 
 static void
-cpw_client_window_dispose (GObject *object)
+ncot_client_window_dispose (GObject *object)
 {
-  CpwClientWindow *win;
-  CpwClientWindowPrivate *priv;
+  NcotClientWindow *win;
+  NcotClientWindowPrivate *priv;
 
-  win = CPW_CLIENT_WINDOW (object);
-  priv = cpw_client_window_get_instance_private (win);
+  win = NCOT_CLIENT_WINDOW (object);
+  priv = ncot_client_window_get_instance_private (win);
 
   g_clear_object (&priv->settings);
 
-  G_OBJECT_CLASS (cpw_client_window_parent_class)->dispose (object);
+  G_OBJECT_CLASS (ncot_client_window_parent_class)->dispose (object);
 }
 
 static void
-cpw_client_window_class_init (CpwClientWindowClass *class)
+ncot_client_window_class_init (NcotClientWindowClass *class)
 {
-  G_OBJECT_CLASS (class)->dispose = cpw_client_window_dispose;
+  G_OBJECT_CLASS (class)->dispose = ncot_client_window_dispose;
 
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gtk/cpwclient/window.ui");
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), CpwClientWindow, stack);
+                                               "/org/gtk/ncotclient/window.ui");
+  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), NcotClientWindow, stack);
 }
 
-CpwClientWindow *
-cpw_client_window_new (CpwClient *app)
+NcotClientWindow *
+ncot_client_window_new (NcotClient *app)
 {
-  return g_object_new (CPW_CLIENT_WINDOW_TYPE, "application", app, NULL);
+  return g_object_new (NCOT_CLIENT_WINDOW_TYPE, "application", app, NULL);
 }
 
 void
-cpw_client_window_open (CpwClientWindow *win,
+ncot_client_window_open (NcotClientWindow *win,
                          GFile            *file)
 {
-  CpwClientWindowPrivate *priv;
+  NcotClientWindowPrivate *priv;
   gchar *basename;
   GtkWidget *scrolled, *view;
   gchar *contents;
@@ -75,7 +75,7 @@ cpw_client_window_open (CpwClientWindow *win,
   GtkTextTag *tag;
   GtkTextIter start_iter, end_iter;
 
-  priv = cpw_client_window_get_instance_private (win);
+  priv = ncot_client_window_get_instance_private (win);
   basename = g_file_get_basename (file);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);

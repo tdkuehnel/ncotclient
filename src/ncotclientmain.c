@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-#include "cpwclient.h"
+#include "ncotclient.h"
 
 int
 main (int argc, char *argv[])
@@ -12,5 +12,5 @@ main (int argc, char *argv[])
    */
   g_setenv ("GSETTINGS_SCHEMA_DIR", ".", FALSE);
 
-  return g_application_run (G_APPLICATION (cpw_client_new ()), argc, argv);
+  return g_application_run (G_APPLICATION (ncot_client_new ()), argc, argv);
 }

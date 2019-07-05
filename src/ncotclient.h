@@ -1,14 +1,14 @@
-#ifndef __CPWCLIENT_H
-#define __CPWCLIENT_H
+#ifndef __NCOTCLIENT_H
+#define __NCOTCLIENT_H
 
 #include <gtk/gtk.h>
 
 
-#define CPW_CLIENT_TYPE (cpw_client_get_type ())
-G_DECLARE_FINAL_TYPE (CpwClient, cpw_client, CPW, CLIENT, GtkApplication)
+#define NCOT_CLIENT_TYPE (ncot_client_get_type ())
+G_DECLARE_FINAL_TYPE (NcotClient, ncot_client, NCOT, CLIENT, GtkApplication)
 
 
-CpwClient     *cpw_client_new         (void);
+NcotClient     *ncot_client_new         (void);
 
 
-#endif /* __CPWCLIENT_H */
+#endif /* __NCOTCLIENT_H */
