@@ -35,6 +35,7 @@ Makefile.in
 # https://www.gnu.org/software/libtool/
 
 /ltmain.sh
+/libtool
 
 # http://www.gnu.org/software/texinfo
 
@@ -51,3 +52,5 @@ autom4te.cachesrc/gschemas.compiled
 src/org.gtk.ncotclient.gschema.valid
 src/ncotclient
 src/gschemas.compiled
+
+mxe_compile_against_gtk+3_fail.txt
